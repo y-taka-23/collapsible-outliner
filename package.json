@@ -1,0 +1,18 @@
+{
+  "name": "collapsible-outliner",
+  "version": "1.0.0",
+  "description": "helpful description of your project",
+  "author": "TAKAHASHI Yuto <ytaka23dev@gmail.com>",
+  "license": "BSD-3-Clause",
+  "repository": "git@github.com:y-taka-23/collapsible-outliner.git",
+  "main": "static/index.js",
+  "devDependencies": {
+    "elm-webpack-loader": "^4.5.0",
+    "file-loader": "^1.1.11",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
+  },
+  "scripts": {
+    "build": "webpack -p"
+  }
+}
