@@ -6,4 +6,4 @@ import Model exposing (Model, Msg)
 
 view : Model -> Html Msg
 view model =
-    div [] [ text model ]
+    div [] [ text "Hello, Elm!" ]
