@@ -1,4 +1,4 @@
-module Model exposing (Model, Msg(..), Item(..), init)
+module Model exposing (Model, Msg(..), Item(..), ItemPath, init)
 
 
 type alias Model =
@@ -11,6 +11,10 @@ type Item
         , expanded : Bool
         , children : List Item
         }
+
+
+type alias ItemPath =
+    List Int
 
 
 sampleModel : Model
@@ -38,7 +42,7 @@ sampleModel =
 
 
 type Msg
-    = NoOp
+    = Toggle ItemPath
 
 
 init : ( Model, Cmd Msg )
