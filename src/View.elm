@@ -1,9 +1,31 @@
 module View exposing (view)
 
 import Html exposing (div, text, Html)
-import Model exposing (Model, Msg)
+import Html.Events exposing (onClick)
+import Model exposing (Model, Msg(..), Item(..))
 
 
 view : Model -> Html Msg
 view model =
-    div [] [ text "Hello, Elm!" ]
+    div [] (List.map viewItem model)
+
+
+viewItem : Item -> Html Msg
+viewItem (Item item) =
+    div
+        []
+        [ div
+            [ onClick (Toggle item.path) ]
+            [ if item.expanded then
+                text "-"
+              else
+                text "+"
+            ]
+        , div [] [ text item.contents ]
+        , div []
+            (if item.expanded then
+                List.map viewItem item.children
+             else
+                []
+            )
+        ]
