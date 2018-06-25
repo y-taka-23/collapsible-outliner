@@ -2,6 +2,7 @@ module View exposing (view)
 
 import Html exposing (div, text, Html)
 import Html.Events exposing (onClick)
+import Html.Attributes exposing (contenteditable)
 import Model exposing (Model, Msg(..), Item(..))
 
 
@@ -21,7 +22,7 @@ viewItem (Item item) =
               else
                 text "+"
             ]
-        , div [] [ text item.contents ]
+        , div [ contenteditable True ] [ text item.contents ]
         , div []
             (if item.expanded then
                 List.map viewItem item.children
