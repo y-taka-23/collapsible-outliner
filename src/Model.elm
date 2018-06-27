@@ -7,8 +7,7 @@ type alias Model =
 
 type Item
     = Item
-        { path : ItemPath
-        , contents : String
+        { contents : String
         , expanded : Bool
         , children : List Item
         }
@@ -21,39 +20,33 @@ type alias ItemPath =
 sampleModel : Model
 sampleModel =
     [ Item
-        { path = [ 0 ]
-        , contents = "1. Good morning"
+        { contents = "1. Good morning"
         , expanded = True
         , children = []
         }
     , Item
-        { path = [ 1 ]
-        , contents = "2. Good afternoon"
+        { contents = "2. Good afternoon"
         , expanded = True
         , children =
             [ Item
-                { path = [ 1, 0 ]
-                , contents = "2-1. Hey"
+                { contents = "2-1. Hey"
                 , expanded = True
                 , children = []
                 }
             , Item
-                { path = [ 1, 1 ]
-                , contents = "2-2. Wow"
+                { contents = "2-2. Wow"
                 , expanded = True
                 , children = []
                 }
             , Item
-                { path = [ 1, 2 ]
-                , contents = "2-3. Yeah"
+                { contents = "2-3. Yeah"
                 , expanded = True
                 , children = []
                 }
             ]
         }
     , Item
-        { path = [ 2 ]
-        , contents = "3. Good evening"
+        { contents = "3. Good evening"
         , expanded = True
         , children = []
         }

@@ -1,5 +1,6 @@
 module Update exposing (update)
 
+import List exposing (reverse)
 import List.Extra exposing (updateAt)
 import Model exposing (Model, Item(..), ItemPath, Msg(..))
 
@@ -8,7 +9,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Toggle path ->
-            case path of
+            case reverse path of
                 [] ->
                     ( model, Cmd.none )
 
@@ -17,13 +18,13 @@ update msg model =
 
 
 toggleNth : Int -> ItemPath -> List Item -> List Item
-toggleNth n path items =
-    updateAt n (toggle path) items
+toggleNth n revpath items =
+    updateAt n (toggle revpath) items
 
 
 toggle : ItemPath -> Item -> Item
-toggle path (Item item) =
-    case path of
+toggle revpath (Item item) =
+    case revpath of
         [] ->
             Item { item | expanded = not item.expanded }
 
