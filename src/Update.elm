@@ -9,30 +9,33 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Toggle path ->
-            case reverse path of
-                [] ->
-                    ( model, Cmd.none )
-
-                n :: ns ->
-                    ( toggleNth n ns model, Cmd.none )
+            ( toggleAt (reverse path) model, Cmd.none )
 
         Indent path ->
             ( indentAt (reverse path) model, Cmd.none )
 
 
-toggleNth : Int -> ItemPath -> List Item -> List Item
-toggleNth n revpath items =
-    updateAt n (toggle revpath) items
-
-
-toggle : ItemPath -> Item -> Item
-toggle revpath (Item item) =
+toggleAt : ItemPath -> List Item -> List Item
+toggleAt revpath items =
     case revpath of
         [] ->
-            Item { item | expanded = not item.expanded }
+            items
+
+        n :: [] ->
+            updateAt n toggle items
 
         n :: ns ->
-            Item { item | children = toggleNth n ns item.children }
+            updateAt n (toggleItem ns) items
+
+
+toggle : Item -> Item
+toggle (Item item) =
+    Item { item | expanded = not item.expanded }
+
+
+toggleItem : ItemPath -> Item -> Item
+toggleItem revpath (Item item) =
+    Item { item | children = toggleAt revpath item.children }
 
 
 indentAt : ItemPath -> List Item -> List Item
@@ -42,22 +45,27 @@ indentAt revpath items =
             items
 
         n :: [] ->
-            if n <= 0 then
-                items
-            else
-                case getAt n items of
-                    Nothing ->
-                        items
-
-                    Just child ->
-                        items |> updateAt (n - 1) (addChild child) |> removeAt n
+            indent n items
 
         n :: ns ->
-            updateAt n (indent ns) items
+            updateAt n (indentItem ns) items
 
 
-indent : ItemPath -> Item -> Item
-indent revpath (Item item) =
+indent : Int -> List Item -> List Item
+indent n items =
+    if n <= 0 then
+        items
+    else
+        case getAt n items of
+            Nothing ->
+                items
+
+            Just child ->
+                items |> updateAt (n - 1) (addChild child) |> removeAt n
+
+
+indentItem : ItemPath -> Item -> Item
+indentItem revpath (Item item) =
     Item { item | children = indentAt revpath item.children }
 
 
