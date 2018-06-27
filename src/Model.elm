@@ -1,8 +1,10 @@
-module Model exposing (Model, Msg(..), Item(..), ItemPath, init)
+module Model exposing (Model, Msg(..), Item(..), ItemPath, init, defaultPath)
 
 
 type alias Model =
-    List Item
+    { items : List Item
+    , focus : ItemPath
+    }
 
 
 type Item
@@ -17,8 +19,13 @@ type alias ItemPath =
     List Int
 
 
-sampleModel : Model
-sampleModel =
+defaultPath : ItemPath
+defaultPath =
+    []
+
+
+sampleItems : List Item
+sampleItems =
     [ Item
         { contents = "Good morning"
         , expanded = True
@@ -57,8 +64,9 @@ type Msg
     = Toggle ItemPath
     | Indent ItemPath
     | Unindent ItemPath
+    | Focus ItemPath
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( sampleModel, Cmd.none )
+    ( { items = sampleItems, focus = [] }, Cmd.none )

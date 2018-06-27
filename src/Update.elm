@@ -9,13 +9,22 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Toggle path ->
-            ( toggleAt (reverse path) model, Cmd.none )
+            ( { model | items = toggleAt (reverse path) model.items }
+            , Cmd.none
+            )
 
         Indent path ->
-            ( indentAt (reverse path) model, Cmd.none )
+            ( { model | items = indentAt (reverse path) model.items }
+            , Cmd.none
+            )
 
         Unindent path ->
-            ( unindentAt (reverse path) model, Cmd.none )
+            ( { model | items = unindentAt (reverse path) model.items }
+            , Cmd.none
+            )
+
+        Focus path ->
+            ( { model | focus = path }, Cmd.none )
 
 
 toggleAt : ItemPath -> List Item -> List Item

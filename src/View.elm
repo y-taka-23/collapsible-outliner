@@ -3,14 +3,17 @@ module View exposing (view)
 import List exposing (range, length)
 import List.Extra exposing (zip)
 import Html exposing (div, text, Html)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onFocus, onBlur)
 import Html.Attributes exposing (contenteditable)
-import Model exposing (Model, Msg(..), Item(..), ItemPath)
+import Model exposing (Model, Msg(..), Item(..), ItemPath, defaultPath)
 
 
 view : Model -> Html Msg
 view model =
-    div [] <| List.map (viewItem []) (numerate model)
+    div []
+        [ div [] [ text <| "focusing on: " ++ toString model.focus ]
+        , div [] <| List.map (viewItem []) (numerate model.items)
+        ]
 
 
 viewItem : ItemPath -> ( Int, Item ) -> Html Msg
@@ -31,7 +34,10 @@ viewItem parent ( n, Item item ) =
             , div [ onClick <| Indent path ] [ text ">>" ]
             , div [ onClick <| Unindent path ] [ text "<<" ]
             , div
-                [ contenteditable True ]
+                [ onFocus <| Focus path
+                , onBlur <| Focus defaultPath
+                , contenteditable True
+                ]
                 [ text <| toString path ++ item.contents ]
             , div []
                 (if item.expanded then
