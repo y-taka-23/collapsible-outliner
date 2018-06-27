@@ -28,7 +28,10 @@ viewItem parent ( n, Item item ) =
                   else
                     text "+"
                 ]
-            , div [ contenteditable True ] [ text item.contents ]
+            , div [ onClick <| Indent path ] [ text ">>" ]
+            , div
+                [ contenteditable True ]
+                [ text <| toString path ++ item.contents ]
             , div []
                 (if item.expanded then
                     List.map (viewItem path) (numerate item.children)

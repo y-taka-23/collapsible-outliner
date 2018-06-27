@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 import List exposing (reverse)
-import List.Extra exposing (updateAt)
+import List.Extra exposing (updateAt, getAt, removeAt)
 import Model exposing (Model, Item(..), ItemPath, Msg(..))
 
 
@@ -15,6 +15,9 @@ update msg model =
 
                 n :: ns ->
                     ( toggleNth n ns model, Cmd.none )
+
+        Indent path ->
+            ( indentAt (reverse path) model, Cmd.none )
 
 
 toggleNth : Int -> ItemPath -> List Item -> List Item
@@ -30,3 +33,34 @@ toggle revpath (Item item) =
 
         n :: ns ->
             Item { item | children = toggleNth n ns item.children }
+
+
+indentAt : ItemPath -> List Item -> List Item
+indentAt revpath items =
+    case revpath of
+        [] ->
+            items
+
+        n :: [] ->
+            if n <= 0 then
+                items
+            else
+                case getAt n items of
+                    Nothing ->
+                        items
+
+                    Just child ->
+                        items |> updateAt (n - 1) (addChild child) |> removeAt n
+
+        n :: ns ->
+            updateAt n (indent ns) items
+
+
+indent : ItemPath -> Item -> Item
+indent revpath (Item item) =
+    Item { item | children = indentAt revpath item.children }
+
+
+addChild : Item -> Item -> Item
+addChild child (Item item) =
+    Item { item | children = child :: item.children }

@@ -20,33 +20,33 @@ type alias ItemPath =
 sampleModel : Model
 sampleModel =
     [ Item
-        { contents = "1. Good morning"
+        { contents = "Good morning"
         , expanded = True
         , children = []
         }
     , Item
-        { contents = "2. Good afternoon"
+        { contents = "Good afternoon"
         , expanded = True
         , children =
             [ Item
-                { contents = "2-1. Hey"
+                { contents = "Hey"
                 , expanded = True
                 , children = []
                 }
             , Item
-                { contents = "2-2. Wow"
+                { contents = "Wow"
                 , expanded = True
                 , children = []
                 }
             , Item
-                { contents = "2-3. Yeah"
+                { contents = "Yeah"
                 , expanded = True
                 , children = []
                 }
             ]
         }
     , Item
-        { contents = "3. Good evening"
+        { contents = "Good evening"
         , expanded = True
         , children = []
         }
@@ -55,6 +55,7 @@ sampleModel =
 
 type Msg
     = Toggle ItemPath
+    | Indent ItemPath
 
 
 init : ( Model, Cmd Msg )
