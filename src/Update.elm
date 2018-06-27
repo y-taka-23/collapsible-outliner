@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 import List exposing (reverse)
-import List.Extra exposing (updateAt, getAt, removeAt)
+import List.Extra exposing (updateAt, getAt, removeAt, setAt)
 import Model exposing (Model, Item(..), ItemPath, Msg(..))
 
 
@@ -13,6 +13,9 @@ update msg model =
 
         Indent path ->
             ( indentAt (reverse path) model, Cmd.none )
+
+        Unindent path ->
+            ( unindentAt (reverse path) model, Cmd.none )
 
 
 toggleAt : ItemPath -> List Item -> List Item
@@ -69,6 +72,62 @@ indentItem revpath (Item item) =
     Item { item | children = indentAt revpath item.children }
 
 
+unindentAt : ItemPath -> List Item -> List Item
+unindentAt revpath items =
+    case revpath of
+        [] ->
+            items
+
+        n :: [] ->
+            items
+
+        n :: m :: [] ->
+            unindent n m items
+
+        n :: m :: ms ->
+            updateAt n (unindentItem (m :: ms)) items
+
+
+unindent : Int -> Int -> List Item -> List Item
+unindent n m items =
+    case getAt n items of
+        Nothing ->
+            items
+
+        Just parent ->
+            case removeChild m parent of
+                ( Nothing, _ ) ->
+                    items
+
+                ( Just child, newParent ) ->
+                    items |> insertAt (n + 1) child |> setAt n newParent
+
+
+unindentItem : ItemPath -> Item -> Item
+unindentItem revpath (Item item) =
+    Item { item | children = unindentAt revpath item.children }
+
+
 addChild : Item -> Item -> Item
 addChild child (Item item) =
     Item { item | children = child :: item.children }
+
+
+removeChild : Int -> Item -> ( Maybe Item, Item )
+removeChild n (Item item) =
+    ( getAt n item.children
+    , Item { item | children = removeAt n item.children }
+    )
+
+
+insertAt : Int -> a -> List a -> List a
+insertAt n x xs =
+    if n <= 0 then
+        x :: xs
+    else
+        case xs of
+            [] ->
+                [ x ]
+
+            y :: ys ->
+                y :: insertAt (n - 1) x ys

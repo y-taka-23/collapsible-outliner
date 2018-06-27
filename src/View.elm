@@ -29,6 +29,7 @@ viewItem parent ( n, Item item ) =
                     text "+"
                 ]
             , div [ onClick <| Indent path ] [ text ">>" ]
+            , div [ onClick <| Unindent path ] [ text "<<" ]
             , div
                 [ contenteditable True ]
                 [ text <| toString path ++ item.contents ]

@@ -56,6 +56,7 @@ sampleModel =
 type Msg
     = Toggle ItemPath
     | Indent ItemPath
+    | Unindent ItemPath
 
 
 init : ( Model, Cmd Msg )
