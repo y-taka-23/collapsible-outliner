@@ -1,9 +1,10 @@
 module View exposing (view)
 
+import Json.Decode exposing (Decoder, at, string, map)
 import List exposing (range, length)
 import List.Extra exposing (zip)
-import Html exposing (div, text, Html)
-import Html.Events exposing (onClick, onFocus, onBlur)
+import Html exposing (div, text, Html, Attribute)
+import Html.Events exposing (onClick, onFocus, onBlur, onInput, on)
 import Html.Attributes exposing (contenteditable)
 import Model exposing (Model, Msg(..), Item(..), ItemPath, defaultPath)
 
@@ -36,6 +37,7 @@ viewItem parent ( n, Item item ) =
             , div
                 [ onFocus <| Focus path
                 , onBlur <| Focus defaultPath
+                , onContentInput <| SetContents path
                 , contenteditable True
                 ]
                 [ text <| toString path ++ item.contents ]
@@ -51,3 +53,13 @@ viewItem parent ( n, Item item ) =
 numerate : List a -> List ( Int, a )
 numerate xs =
     zip (range 0 (length xs - 1)) xs
+
+
+onContentInput : (String -> msg) -> Attribute msg
+onContentInput tagger =
+    on "input" (map tagger targetTextContent)
+
+
+targetTextContent : Decoder String
+targetTextContent =
+    at [ "target", "textContent" ] string

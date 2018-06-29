@@ -65,6 +65,7 @@ type Msg
     | Indent ItemPath
     | Unindent ItemPath
     | Focus ItemPath
+    | SetContents ItemPath String
 
 
 init : ( Model, Cmd Msg )
