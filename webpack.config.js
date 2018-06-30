@@ -15,6 +15,15 @@ module.exports = {
                 loader: 'file-loader?name=[name].[ext]'
             },
             {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.elm$/,
                 exclude: [/elm-stuff/, /node_modules/],
                 loader: 'elm-webpack-loader?verbose=true&warn=true'
