@@ -7,6 +7,7 @@
   "repository": "git@github.com:y-taka-23/collapsible-outliner.git",
   "main": "static/index.js",
   "devDependencies": {
+    "bootstrap": "^4.1.1",
     "css-loader": "^0.28.11",
     "elm-webpack-loader": "^4.5.0",
     "file-loader": "^1.1.11",
