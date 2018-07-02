@@ -1,5 +1,36 @@
-@import '~bootstrap/dist/css/bootstrap-reboot.min';
+@import '~bootstrap/dist/css/bootstrap-reboot.min.css';
+@import '~@fortawesome/fontawesome-free-webfonts/css/fontawesome.css';
+@import '~@fortawesome/fontawesome-free-webfonts/css/fa-solid.css';
+@import '~@fortawesome/fontawesome-free-webfonts/css/fa-regular.css';
 
 body {
-    color: blue;
+    background: lightgray;
+}
+
+#page {
+    background: white;
+    border: 1px;
+    border-color: gray;
+    border-style: solid;
+    margin: 30px auto;
+    padding: 50px 50px;
+    width: 800px;
+    min-height: 1000px;
+}
+
+.item-container {
+    display: flex;
+}
+
+.item-toggle {
+    width: 20px;
+    text-align: center;
+}
+
+.item-bullet {
+    width: 20px;
+    text-align: center;
+}
+
+.item-content {
 }
