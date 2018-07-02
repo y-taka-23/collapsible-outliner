@@ -24,30 +24,38 @@ viewItem parent ( n, Item item ) =
         div
             [ class "item-container" ]
             [ div
-                [ class "item-toggle"
-                , onClick <| Toggle path
-                ]
-                [ if item.expanded then
-                    i [ class "far fa-minus-square" ] []
-                  else
-                    i [ class "far fa-plus-square" ] []
-                ]
-            , div
-                [ class "item-bullet" ]
-                [ if item.expanded then
-                    i [ class "fas fa-angle-right" ] []
-                  else
-                    i [ class "fas fa-angle-double-right" ] []
+                [ class "item-toggle-container" ]
+                [ div
+                    [ class "item-toggle"
+                    , onClick <| Toggle path
+                    ]
+                    [ if item.expanded then
+                        i [ class "far fa-minus-square" ] []
+                      else
+                        i [ class "far fa-plus-square" ] []
+                    ]
                 ]
             , div
-                [ class "item-content"
-                , onFocus <| Focus path
-                , onBlur <| Focus defaultPath
-                , onContentInput <| SetContents path
-                , contenteditable True
+                [ class "item-bullet-container" ]
+                [ div
+                    [ class "item-bullet" ]
+                    [ if item.expanded then
+                        i [ class "fas fa-angle-right" ] []
+                      else
+                        i [ class "fas fa-angle-double-right" ] []
+                    ]
                 ]
-                [ text item.contents
-                , div []
+            , div [ class "item-content-container" ]
+                [ div
+                    [ class "item-content"
+                    , onFocus <| Focus path
+                    , onBlur <| Focus defaultPath
+                    , onContentInput <| SetContents path
+                    , contenteditable True
+                    ]
+                    [ text item.contents ]
+                , div
+                    [ class "item-children" ]
                     (if item.expanded then
                         List.map (viewItem path) (numerate item.children)
                      else

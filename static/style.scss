@@ -22,14 +22,32 @@ body {
     display: flex;
 }
 
-.item-toggle {
+.item-toggle-container {
+    display: flex;
+    flex-flow: column nowrap;
     width: 20px;
+}
+
+.item-toggle {
     text-align: center;
+    width: 100%;
+}
+
+.item-bullet-container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 20px;
 }
 
 .item-bullet {
-    width: 20px;
     text-align: center;
+    width: 100%;
+}
+
+.item-content-container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
 }
 
 .item-content {
