@@ -4,6 +4,7 @@ module Model exposing (Model, Msg(..), Item(..), ItemPath, init, defaultPath)
 type alias Model =
     { items : List Item
     , focus : ItemPath
+    , mouse : ItemPath
     }
 
 
@@ -65,9 +66,12 @@ type Msg
     | Indent ItemPath
     | Unindent ItemPath
     | Focus ItemPath
+    | Mouse ItemPath
     | SetContents ItemPath String
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { items = sampleItems, focus = [] }, Cmd.none )
+    ( { items = sampleItems, focus = defaultPath, mouse = defaultPath }
+    , Cmd.none
+    )

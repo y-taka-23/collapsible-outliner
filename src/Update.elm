@@ -26,6 +26,9 @@ update msg model =
         Focus path ->
             ( { model | focus = path }, Cmd.none )
 
+        Mouse path ->
+            ( { model | mouse = path }, Cmd.none )
+
         SetContents path contents ->
             ( { model
                 | items = setContentsAt (reverse path) contents model.items
