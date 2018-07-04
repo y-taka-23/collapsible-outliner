@@ -78,7 +78,7 @@ viewItem mouse parent ( n, Item item ) =
             ]
 
 
-toggleStyle : ItemPath -> ItemPath -> List Item -> Attribute Msg
+toggleStyle : ItemPath -> ItemPath -> List Item -> Attribute msg
 toggleStyle mouse path children =
     if mouse == path && length children > 0 then
         style []
