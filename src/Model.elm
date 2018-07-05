@@ -67,7 +67,6 @@ type Msg
     | Unindent ItemPath
     | Focus ItemPath
     | Mouse ItemPath
-    | SetContents ItemPath String
 
 
 init : ( Model, Cmd Msg )

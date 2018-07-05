@@ -1,6 +1,5 @@
 module View exposing (view)
 
-import Json.Decode exposing (Decoder, at, string, map)
 import List exposing (range, length)
 import List.Extra exposing (zip)
 import Html exposing (div, text, i, Html, Attribute)
@@ -63,7 +62,6 @@ viewItem mouse parent ( n, Item item ) =
                     , Events.onBlur <| Focus defaultPath
                     , Events.onMouseEnter <| Mouse path
                     , Events.onMouseLeave <| Mouse defaultPath
-                    , onContentInput <| SetContents path
                     , contenteditable True
                     ]
                     [ text item.contents ]
@@ -89,13 +87,3 @@ toggleStyle mouse path children =
 numerate : List a -> List ( Int, a )
 numerate xs =
     zip (range 0 (length xs - 1)) xs
-
-
-onContentInput : (String -> msg) -> Attribute msg
-onContentInput tagger =
-    Events.on "input" (map tagger targetTextContent)
-
-
-targetTextContent : Decoder String
-targetTextContent =
-    at [ "target", "textContent" ] string

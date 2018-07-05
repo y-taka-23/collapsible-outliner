@@ -29,13 +29,6 @@ update msg model =
         Mouse path ->
             ( { model | mouse = path }, Cmd.none )
 
-        SetContents path contents ->
-            ( { model
-                | items = setContentsAt (reverse path) contents model.items
-              }
-            , Cmd.none
-            )
-
 
 toggleAt : ItemPath -> List Item -> List Item
 toggleAt revpath items =
@@ -125,29 +118,6 @@ unindent n m items =
 unindentItem : ItemPath -> Item -> Item
 unindentItem revpath (Item item) =
     Item { item | children = unindentAt revpath item.children }
-
-
-setContentsAt : ItemPath -> String -> List Item -> List Item
-setContentsAt revpath contents items =
-    case revpath of
-        [] ->
-            items
-
-        n :: [] ->
-            updateAt n (setContents contents) items
-
-        n :: ns ->
-            updateAt n (setContentsItem ns contents) items
-
-
-setContents : String -> Item -> Item
-setContents contents (Item item) =
-    Item { item | contents = contents }
-
-
-setContentsItem : ItemPath -> String -> Item -> Item
-setContentsItem revpath contents (Item item) =
-    Item { item | children = setContentsAt revpath contents item.children }
 
 
 addChild : Item -> Item -> Item
