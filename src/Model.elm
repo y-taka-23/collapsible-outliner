@@ -62,7 +62,8 @@ sampleItems =
 
 
 type Msg
-    = Toggle ItemPath
+    = NoOp
+    | Toggle ItemPath
     | Indent ItemPath
     | Unindent ItemPath
     | Focus ItemPath

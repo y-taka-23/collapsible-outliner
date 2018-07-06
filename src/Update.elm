@@ -8,6 +8,9 @@ import Model exposing (Model, Item(..), ItemPath, Msg(..))
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         Toggle path ->
             ( { model | items = toggleAt (reverse path) model.items }
             , Cmd.none
