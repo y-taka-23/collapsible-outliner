@@ -15,5 +15,8 @@ handleKey model code =
         39 ->
             Indent model.focus
 
+        37 ->
+            Unindent model.focus
+
         _ ->
             NoOp
