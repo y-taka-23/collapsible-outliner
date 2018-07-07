@@ -125,7 +125,7 @@ unindentItem revpath (Item item) =
 
 addChild : Item -> Item -> Item
 addChild child (Item item) =
-    Item { item | children = child :: item.children }
+    Item { item | children = item.children ++ [ child ] }
 
 
 removeChild : Int -> Item -> ( Maybe Item, Item )
