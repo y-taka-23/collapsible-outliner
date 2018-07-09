@@ -1,5 +1,7 @@
 module Update exposing (update)
 
+import Keyboard.Event exposing (KeyboardEvent)
+import Keyboard.Key exposing (Key(Tab))
 import List exposing (reverse)
 import List.Extra exposing (updateAt, getAt, removeAt, setAt)
 import Model exposing (Model, Item(..), ItemPath, Msg(..))
@@ -16,21 +18,11 @@ update msg model =
             , Cmd.none
             )
 
-        Indent path ->
-            ( { model | items = indentAt (reverse path) model.items }
-            , Cmd.none
-            )
-
-        Unindent path ->
-            ( { model | items = unindentAt (reverse path) model.items }
-            , Cmd.none
-            )
-
-        Focus path ->
-            ( { model | focus = path }, Cmd.none )
-
         Mouse path ->
             ( { model | mouse = path }, Cmd.none )
+
+        Keyboard path event ->
+            ( handleKeyboard path event model, Cmd.none )
 
 
 toggleAt : ItemPath -> List Item -> List Item
@@ -146,3 +138,14 @@ insertAt n x xs =
 
             y :: ys ->
                 y :: insertAt (n - 1) x ys
+
+
+handleKeyboard : ItemPath -> KeyboardEvent -> Model -> Model
+handleKeyboard path event model =
+    if event.keyCode == Tab && not event.repeat then
+        if event.shiftKey then
+            { model | items = unindentAt (reverse path) model.items }
+        else
+            { model | items = indentAt (reverse path) model.items }
+    else
+        model

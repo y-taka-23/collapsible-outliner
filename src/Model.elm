@@ -1,9 +1,10 @@
 module Model exposing (Model, Msg(..), Item(..), ItemPath, init, defaultPath)
 
+import Keyboard.Event exposing (KeyboardEvent)
+
 
 type alias Model =
     { items : List Item
-    , focus : ItemPath
     , mouse : ItemPath
     }
 
@@ -64,14 +65,12 @@ sampleItems =
 type Msg
     = NoOp
     | Toggle ItemPath
-    | Indent ItemPath
-    | Unindent ItemPath
-    | Focus ItemPath
     | Mouse ItemPath
+    | Keyboard ItemPath KeyboardEvent
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { items = sampleItems, focus = defaultPath, mouse = defaultPath }
+    ( { items = sampleItems, mouse = defaultPath }
     , Cmd.none
     )

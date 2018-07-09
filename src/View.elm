@@ -1,5 +1,7 @@
 module View exposing (view)
 
+import Json.Decode as Decode
+import Keyboard.Event exposing (decodeKeyboardEvent)
 import List exposing (range, length)
 import List.Extra exposing (zip)
 import Html exposing (div, text, i, Html, Attribute)
@@ -58,10 +60,10 @@ viewItem mouse parent ( n, Item item ) =
             , div [ class "item-content-container" ]
                 [ div
                     [ class "item-content"
-                    , Events.onFocus <| Focus path
-                    , Events.onBlur <| Focus defaultPath
                     , Events.onMouseEnter <| Mouse path
                     , Events.onMouseLeave <| Mouse defaultPath
+                    , Events.on "keydown" <|
+                        Decode.map (Keyboard path) decodeKeyboardEvent
                     , contenteditable True
                     ]
                     [ text item.contents ]
